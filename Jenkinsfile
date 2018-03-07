@@ -30,7 +30,8 @@ node {
             // sh "docker build -t jenkinstest ."
             def customImage = docker.build("jenkinstest:${env.BUILD_ID}")
             customImage.push()
-            }
+
+            customImage.push('latest')
         }
         stage ('Tests') {
             //'unit': {
