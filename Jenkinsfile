@@ -27,11 +27,10 @@ node {
         //}
         stage('Build') {
             sh "npm install"
-            // sh "docker build -t jenkinstest ."
-            def customImage = docker.build("jenkinstest:${env.BUILD_ID}")
+        }
+        stage('Publish') {
+            def customImage = docker.build("christianvonstaampf/jenkinstest:${env.BUILD_ID}")
             customImage.push()
-
-            customImage.push('latest')
         }
         stage ('Tests') {
             //'unit': {
