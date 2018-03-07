@@ -26,12 +26,13 @@ node {
         //    }
         //}
         stage('Build') {
-            sh "yarn install"
+            sh "npm install"
+            // sh "docker build -t jenkinstest ."
         }
         stage ('Tests') {
-            'unit': {
-                sh "yarn test"
-            }
+            //'unit': {
+            //    sh "yarn test"
+            //}
         }
         if (deploySettings) {
             stage ('Deploy') {
