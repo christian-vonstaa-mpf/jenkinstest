@@ -29,7 +29,7 @@ node {
             sh "npm install"
         }
         stage('Publish') {
-            def customImage = docker.build("christianvonstaampf/jenkinstest:${env.BUILD_ID}")
+            def customImage = docker.build("christianvonstaampf/jenkinstest:${env.BUILD_ID")
             customImage.push()
         }
         stage ('Tests') {
