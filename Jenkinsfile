@@ -29,8 +29,10 @@ node {
             sh "npm install"
         }
         stage('Publish') {
-            def customImage = docker.build("christianvonstaampf/jenkinstest:${env.BUILD_ID}")
-            customImage.push()
+            docker.withRegistry('https://registry.hub.docker.com/v1/repositories', 'docker-personal') {
+                def customImage = docker.build("christianvonstaampf/jenkinstest:${env.BUILD_ID}")
+                customImage.push()
+            }
         }
         stage ('Tests') {
             //'unit': {
