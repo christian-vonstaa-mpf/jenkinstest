@@ -14,4 +14,4 @@ RUN yarn install
 
 EXPOSE 8889
 
-CMD ["yarn", "start:prod"]
+CMD ["npm", "start"]
