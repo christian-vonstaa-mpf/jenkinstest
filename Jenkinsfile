@@ -27,17 +27,19 @@ node {
         //}
         stage('Build') {
             sh "npm install"
+
         }
         stage('Publish') {
             docker.withRegistry('https://registry.hub.docker.com/v1/repositories', 'docker-personal') {
-                def customImage = docker.build("christianvonstaampf/jenkinstest:${env.BUILD_ID}")
-                customImage.push()
+            def customImage = docker.build("christianvonstaampf/jenkinstest:${env.BUILD_ID}")
+            customImage.push()
+            customImage.push('latest')
             }
         }
         stage ('Tests') {
-            'UI': {
-                sh "yarn test"
-            }
+            //'UI': {
+            //    sh "yarn test"
+            //}
         }
         if (deploySettings) {
             stage ('Deploy') {
