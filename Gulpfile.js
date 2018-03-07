@@ -1,5 +1,6 @@
 var gulp    = require('gulp'),
-    connect = require('gulp-connect');
+    connect = require('gulp-connect'),
+    proxy   = require('http-proxy-middleware');
 
 gulp.task('connect', function() {
     connect.server({
