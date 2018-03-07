@@ -28,9 +28,8 @@ node {
         stage('Build') {
             sh "npm install"
             // sh "docker build -t jenkinstest ."
-            newImage = docker.build(${imageTag})
-            docker.withRegistry("https://${registryAddress}", '${credentialsId}'){
-                 newImage.push("${variables.version}")
+            def customImage = docker.build("jenkinstest:${env.BUILD_ID}")
+            customImage.push()
             }
         }
         stage ('Tests') {
