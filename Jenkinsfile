@@ -22,10 +22,12 @@ pipeline {
 
         stage('Publish') {
             steps {
-                docker.withRegistry('https://registry.hub.docker.com/v1/repositories', 'docker-personal') {
-                    def customImage = docker.build("christianvonstaampf/jenkinstest:${env.BUILD_ID}")
-                    customImage.push()
-                    customImage.push('latest')
+                script {
+                    withDockerRegistry([credentialsId: 'docker-personal', url: "https://registry.hub.docker.com/v1/repositories"]) {
+                        def image = docker.build("christianvonstaampf/jenkinstest:${env.BUILD_ID}")
+                        image.push()
+                        image.push('latest')
+                    }
                 }
             }
         }
