@@ -1,4 +1,4 @@
-node {
+node('master') {
     def PROJECT_NAME = "mplatform-ui-login-service"
 
     // Clean workspace before doing anything
