@@ -1,36 +1,36 @@
-pipeline {
-    agent any
+node {
+    def PROJECT_NAME = "mplatform-ui-login-service"
 
-    stages {
+    // Clean workspace before doing anything
+    deleteDir()
+
+    try {
         stage ('Clone') {
-            steps {
-                checkout scm
-            }
+            checkout scm
         }
 
         stage('Build') {
-            steps {
-                sh "npm install"
-            }
+            sh "npm install"
         }
 
-        //stage ('Tests') {
-        //    steps {
-        //        sh "yarn test"
-        //    }
-        //}
+        stage ('Tests') {
+            //'UI': {
+            //    sh "yarn test"
+            //}
+        }
 
         stage('Publish') {
-            steps {
-                script {
-                    withDockerRegistry([credentialsId: 'docker-personal', url: "https://registry.hub.docker.com/v1/repositories/"]) {
-                        def image = docker.build("christianvonstaampf/jenkinstest:${env.BUILD_ID}")
-                        image.push()
-                        image.push('latest')
-                    }
-                }
+            docker.withRegistry('https://registry.hub.docker.com/v1/repositories', 'docker-personal') {
+                def customImage = docker.build("christianvonstaampf/jenkinstest:${env.BUILD_ID}")
+                customImage.push()
+                customImage.push('latest')
             }
         }
+
+
+    } catch (err) {
+        currentBuild.result = 'FAILED'
+        throw err
     }
 }
 
