@@ -23,7 +23,7 @@ pipeline {
         stage('Publish') {
             steps {
                 script {
-                    withDockerRegistry([credentialsId: 'docker-personal', url: "https://registry.hub.docker.com/v1/repositories"]) {
+                    withDockerRegistry([credentialsId: 'docker-personal', url: "https://registry.hub.docker.com/v1/repositories/"]) {
                         def image = docker.build("christianvonstaampf/jenkinstest:${env.BUILD_ID}")
                         image.push()
                         image.push('latest')
